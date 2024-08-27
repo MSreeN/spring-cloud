@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
@@ -14,3 +14,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+accounts:
+  message: Welcome!
+  contactDetails:
+    name: sree
+    email: sree@gmail.com
+  onCallSupport:
+    - 989898
+    - 787665
