@@ -2,3 +2,5 @@
 ./accounts/m.*
 ./loans/m.*
 ./cards/m.*
+./configserver/.mvn/**
+./configserver/m.*
