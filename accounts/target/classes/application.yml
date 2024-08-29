@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  application:
+    name: "accounts"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -14,12 +16,15 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-accounts:
-  message: Welcome!
-  contactDetails:
-    name: sree
-    email: sree@gmail.com
-  onCallSupport:
-    - 989898
-    - 787665
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:8088/"
+#accounts:
+#  message: Welcome!
+#  contactDetails:
+#    name: sree
+#    email: sree@gmail.com
+#  onCallSupport:
+#    - 989898
+#    - 787665
