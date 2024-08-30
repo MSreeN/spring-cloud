@@ -10,6 +10,12 @@ services:
           memory: 700m
     networks:
       - bank
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8088/"
+      SPRING_PROFIES_ACTIVE: default
+    depends_on:
+      configserver:
+        condition: service_healthy
   loans:
     image: "nsree/loans:v1"
     container_name: loans_ms
@@ -21,6 +27,9 @@ services:
           memory: 700m
     networks:
       - bank
+    depends_on:
+      configserver:
+        condition: service_healthy
   cards:
     image: "nsree/cards:v1"
     container_name: cards_ms
@@ -30,6 +39,31 @@ services:
       resources:
         limits:
           memory: 700m
+    networks:
+      - bank
+    depends_on:
+      configserver:
+        condition: service_healthy
+  configserver:
+    image: "nsree/configserver:v1"
+    container_name: configserver_ms
+    ports:
+      - "8088:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - bank
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+  rabbitmq:
+    image: "rabbitmq:3.13-management"
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
     networks:
       - bank
 networks:
