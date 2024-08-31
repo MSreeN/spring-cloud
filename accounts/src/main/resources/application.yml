@@ -18,8 +18,8 @@ spring:
     show-sql: true
   profiles:
     active: "prod"
-#  config:
-#    import: "optional:configserver:http://localhost:8088/"
+  config:
+    import: "optional:configserver:http://localhost:8088/"
   management:
     endpoints:
       web:

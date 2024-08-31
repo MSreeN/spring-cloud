@@ -2,6 +2,7 @@ C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\audit\AuditAwareImpl.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\constants\AccountsConstants.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\controller\AccountsController.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\AccountsContactInfoDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\AccountsDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\CustomerDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\ErrorResponseDto.java

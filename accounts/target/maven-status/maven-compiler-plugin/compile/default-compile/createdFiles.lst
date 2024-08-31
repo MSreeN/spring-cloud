@@ -12,6 +12,7 @@ com\eazybytes\accounts\audit\AuditAwareImpl.class
 com\eazybytes\accounts\repository\CustomerRepository.class
 com\eazybytes\accounts\service\IAccountsService.class
 com\eazybytes\accounts\service\impl\AccountsServiceImpl.class
+com\eazybytes\accounts\dto\AccountsContactInfoDto.class
 com\eazybytes\accounts\entity\Customer.class
 com\eazybytes\accounts\constants\AccountsConstants.class
 com\eazybytes\accounts\mapper\AccountsMapper.class
