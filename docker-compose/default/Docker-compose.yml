@@ -1,4 +1,40 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    hostname: rabbitmq
+    container_name: rabbitmq_ms
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - bank
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+  configserver:
+    image: "nsree/configserver:latest"
+    container_name: configserver_ms
+    ports:
+      - "8088:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8088/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      start_interval: 10s
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - bank
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
   accounts:
     image: "nsree/accounts:latest"
     container_name: accounts_ms
@@ -50,28 +86,6 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8088/"
       SPRING_PROFIES_ACTIVE: default
-  configserver:
-    image: "nsree/configserver:latest"
-    container_name: configserver_ms
-    ports:
-      - "8088:8080"
-    deploy:
-      resources:
-        limits:
-          memory: 700m
-    networks:
-      - bank
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-  rabbitmq:
-    image: "rabbitmq:3.13-management"
-    container_name: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
-    networks:
-      - bank
 networks:
   bank:
     driver: "bridge"

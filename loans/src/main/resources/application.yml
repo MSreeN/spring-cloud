@@ -18,3 +18,4 @@ spring:
     active: "prod"
   config:
     import: "optional:configserver:http://localhost:8088/"
+  rabbitmq:
