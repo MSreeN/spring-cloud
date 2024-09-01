@@ -1,19 +1,43 @@
 services:
-  rabbitmq:
-    image: rabbitmq:3.13-management
-    hostname: rabbitmq
-    container_name: rabbitmq_ms
+  accountsdb:
+    image: "nsree/accountsdb:latest"
+    container_name: accountsdb
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - 3301:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=accounts
     networks:
       - bank
-    healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 5s
+    extends:
+      file: Docker-commons.yml
+      service: db_health_check
+  cardsdb:
+    image: "nsree/cardsdb:latest"
+    container_name: cardsdb
+    ports:
+      - 3302:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=cards
+    networks:
+      - bank
+    extends:
+      file: Docker-commons.yml
+      service: db_health_check
+  loansdb:
+    image: "nsree/loansdb:latest"
+    container_name: loansdb
+    ports:
+      - 3303:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=loans
+    networks:
+      - bank
+    extends:
+      file: Docker-commons.yml
+      service: db_health_check
   configserver:
     image: "nsree/configserver:latest"
     container_name: configserver_ms
@@ -49,9 +73,15 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://configserver:8088/"
       SPRING_PROFIES_ACTIVE: default
+      SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3301/accounts"
     depends_on:
       configserver:
         condition: service_healthy
+      accountsdb:
+        condition: service_healthy
+    extends:
+      file: Docker-commons.yml
+      service: db_connectivity
   loans:
     image: "nsree/loans:latest"
     container_name: loans_ms
