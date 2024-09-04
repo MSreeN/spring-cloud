@@ -1,20 +1,31 @@
-server:
-  port: 9000
+
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+#    url: jdbc:h2:mem:testdb
+#    driverClassName: org.h2.Driver
+#    driverClassName: org.hibernate.dialect.MySQLDialect
+    username: root
+    password: root
+#  h2:
+#    console:
+#      enabled: true
+  sql:
+    init:
+      mode: always
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+#    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
     show-sql: true
-  profiles:
-    active: "prod"
-  config:
-    import: "optional:configserver:http://localhost:8088/"
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+#  profiles:
+#    active: "prod"
+#  config:
+#    import: "optional:configserver:http://configserver:8088/"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

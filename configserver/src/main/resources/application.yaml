@@ -15,19 +15,22 @@ spring:
           clone-on-start: true
           default-label: main
           timeout: 5
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: "*"
+#  management:
+#    endpoints:
+#      web:
+#        exposure:
+#          include: "*"
+#    health:
+#      readiness-state:
+#        enabled: true
+#      liveness-state:
+#        enabled: true
+#      probes:
+#        enabled: true
+management:
+  endpoint:
     health:
-      readiness-state:
+      probes:
         enabled: true
-      liveness-state:
-        enabled: true
-      endpoint:
-        health:
-          probes:
-            enabled: true
 
 
