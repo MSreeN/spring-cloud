@@ -20,10 +20,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-#  profiles:
-#    active: "prod"
-#  config:
-#    import: "optional:configserver:http://configserver:8088/"
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://configserver:8088/"
 management:
   endpoints:
     web:
