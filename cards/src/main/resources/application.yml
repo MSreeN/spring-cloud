@@ -1,9 +1,16 @@
 
 spring:
   datasource:
-#    url: jdbc:h2:mem:testdb
-#    driverClassName: org.h2.Driver
-#    driverClassName: org.hibernate.dialect.MySQLDialect
+    url: jdbc:h2:mem:cards
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+    enabled: true
+#   url: jdbc:h2:mem:testdb
+#   driverClassName: org.h2.Driver
+#   driverClassName: org.hibernate.dialect.MySQLDialect
     username: root
     password: root
 #  h2:
