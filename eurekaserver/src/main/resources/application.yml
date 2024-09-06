@@ -1,0 +1,15 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: eurekaserver
+  config:
+    import: "optional:configserver:http://localhost:8088/"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
