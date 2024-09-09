@@ -2,10 +2,15 @@ C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\audit\AuditAwareImpl.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\constants\AccountsConstants.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\controller\AccountsController.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\controller\CustomerController.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\AccountsContactInfoDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\AccountsDto.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\CardsDto.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\CustomerDetailsDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\CustomerDto.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\CustomerMapper.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\ErrorResponseDto.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\LoansDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\dto\ResponseDto.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\entity\Accounts.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\entity\BaseEntity.java
@@ -17,5 +22,9 @@ C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\mapper\CustomerMapper.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\repository\AccountsRepository.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\repository\CustomerRepository.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\service\clients\CardsFeignClient.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\service\clients\LoansFeignClient.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\service\IAccountsService.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\service\ICustomersService.java
 C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\service\impl\AccountsServiceImpl.java
+C:\Users\dnagasre\OneDrive - Capgemini\Documents\Spring Cloud\Course code\Learn\accounts\src\main\java\com\eazybytes\accounts\service\impl\CustomersServiceImpl.java

@@ -1,166 +1,4 @@
-#services:
-#  accountsdb:
-#    image: "nsree/accountsdb:latest"
-#    container_name: accountsdb
-#    ports:
-#      - 3301:3306
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=accounts
-#    networks:
-#      - bank
-#    extends:
-#      file: common-config.yml
-#      service: db-health-check
-#  cardsdb:
-#    image: "nsree/cardsdb:latest"
-#    container_name: cardsdb
-#    ports:
-#      - 3302:3306
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=cards
-#    networks:
-#      - bank
-#    extends:
-#      file: common-config.yml
-#      service: db-health-check
-#  loansdb:
-#    image: "nsree/loansdb:latest"
-#    container_name: loansdb
-#    ports:
-#      - 3303:3306
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=loans
-#    networks:
-#      - bank
-#    extends:
-#      file: common-config.yml
-#      service: db-health-check
-#  configserver:
-#    image: "nsree/configserver:latest"
-#    container_name: configserver_ms
-#    ports:
-#      - "8088:8080"
-#    healthcheck:
-#      test: "curl --fail --silent localhost:8088/actuator/health/readiness | grep UP || exit 1"
-#      interval: 10s
-#      timeout: 5s
-#      start_interval: 10s
-#    environment:
-#      SPRING_RABBITMQ_HOST: "rabbitmq"
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 700m
-#    networks:
-#      - bank
-#    depends_on:
-#      rabbitmq:
-#        condition: service_healthy
-#  accounts:
-#    image: "nsree/accounts:latest"
-#    container_name: accounts_ms
-#    ports:
-#      - "8081:8080"
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 700m
-#    networks:
-#      - bank
-#    environment:
-#      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8088/"
-#      SPRING_PROFILES_ACTIVE: default
-#      SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3301/accounts"
-#    depends_on:
-#      configserver:
-#        condition: service_healthy
-#      accountsdb:
-#        condition: service_healthy
-#    extends:
-#      file: common-config.yml
-#      service: db-connectivity
-#  loans:
-#    image: "nsree/loans:latest"
-#    container_name: loans_ms
-#    ports:
-#      - "8082:8080"
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 700m
-#    networks:
-#      - bank
-#    depends_on:
-#      configserver:
-#        condition: service_healthy
-#    environment:
-#      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8088/"
-#      SPRING_PROFILES_ACTIVE: default
-#  cards:
-#    image: "nsree/cards:latest"
-#    container_name: cards_ms
-#    ports:
-#      - "8083:8080"
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 700m
-#    networks:
-#      - bank
-#    depends_on:
-#      configserver:
-#        condition: service_healthy
-#    environment:
-#      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8088/"
-#      SPRING_PROFILES_ACTIVE: default
-#networks:
-#  bank:
-#    driver: "bridge"
-
-
-
-
-
-
-
-
-
-
-
 services:
-  accountsdb:
-    container_name: accountsdb
-    ports:
-      - 3301:3306
-    environment:
-      MYSQL_DATABASE: accountsdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
-  loansdb:
-    container_name: loansdb
-    ports:
-      - 3303:3306
-    environment:
-      MYSQL_DATABASE: loansdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
-  cardsdb:
-    container_name: cardsdb
-    ports:
-      - 3302:3306
-    environment:
-      MYSQL_DATABASE: cardsdb
-    extends:
-      file: common-config.yml
-      service: microservice-db-config
-
   configserver:
     image: "nsree/configserver:latest"
     container_name: configserver-ms
@@ -176,6 +14,26 @@ services:
       file: common-config.yml
       service: microservice-base-config
 
+  eurekaserver:
+    image: "nsree/eurekaserver:latest"
+    container_name: eurekaserver-ms
+    ports:
+      - "8089:8089"
+    healthcheck:
+      test: "curl --fail --silent localhost:8089/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+    depends_on:
+      configserver:
+        condition: service_healthy
+
   accounts:
     image: "nsree/accounts:latest"
     container_name: accounts-ms
@@ -183,15 +41,9 @@ services:
       - "8081:8080"
     environment:
       SPRING_APPLICATION_NAME: "accounts"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://accountsdb:3306/accountsdb"
-    depends_on:
-      accountsdb:
-        condition: service_healthy
-      configserver:
-        condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   loans:
     image: "nsree/loans:latest"
@@ -200,15 +52,9 @@ services:
       - "8083:8080"
     environment:
       SPRING_APPLICATION_NAME: "loans"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://loansdb:3306/loansdb"
-    depends_on:
-      loansdb:
-        condition: service_healthy
-      configserver:
-        condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   cards:
     image: "nsree/cards:latest"
@@ -217,15 +63,9 @@ services:
       - "8082:8080"
     environment:
       SPRING_APPLICATION_NAME: "cards"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://cardsdb:3306/cardsdb"
-    depends_on:
-      cardsdb:
-        condition: service_healthy
-      configserver:
-        condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
 networks:
   eazybank:
