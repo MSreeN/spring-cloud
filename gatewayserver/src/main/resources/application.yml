@@ -1,3 +1,6 @@
+server:
+  port:
+    8090
 spring:
   application:
     name: gatewayserver
@@ -14,3 +17,6 @@ management:
     web:
       exposure:
         include: '*'
+  endpoint:
+    gateway:
+      enabled: true
