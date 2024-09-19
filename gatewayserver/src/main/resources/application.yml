@@ -21,3 +21,9 @@ management:
   endpoint:
     gateway:
       enabled: true
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
