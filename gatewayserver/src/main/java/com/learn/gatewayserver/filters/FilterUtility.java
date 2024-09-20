@@ -1,10 +1,12 @@
 package com.learn.gatewayserver.filters;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.List;
 
+@Component
 public class FilterUtility {
 
     public static final String TRANSACTION_ID = "transactionId";

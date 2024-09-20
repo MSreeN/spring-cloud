@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,6 +42,8 @@ public class AccountsController {
 
     @Autowired
     private AccountsContactInfoDto accountsContactInfoDto;
+
+    public static final Logger log = LoggerFactory.getLogger(AccountsController.class);
 
     @Operation(
             summary = "Create Account REST API",
@@ -86,9 +90,11 @@ public class AccountsController {
     }
     )
     @GetMapping("/fetch")
-    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam
+    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestHeader("transactionId") String transactionId,
+            @RequestParam
                                                                @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                                String mobileNumber) {
+        log.debug("TransactionId form header" + transactionId);
         CustomerDto customerDto = iAccountsService.fetchAccount(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
