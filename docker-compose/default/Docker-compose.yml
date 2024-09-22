@@ -34,13 +34,37 @@ services:
       configserver:
         condition: service_healthy
 
+  gatewayserver:
+    image: "nsree/gatewayserver:latest"
+    container_name: gatewayserver-ms
+    ports:
+      - "8090:8090"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+    depends_on:
+      accounts:
+        condition: service_healthy
+      cards:
+        condition: service_healthy
+      loans:
+        condition: service_healthy
+
   accounts:
     image: "nsree/accounts:latest"
     container_name: accounts-ms
     ports:
-      - "8081:8080"
+      - "8081:8081"
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     environment:
-      SPRING_APPLICATION_NAME: "accounts"
+      SPRING_APPLICATION_NAME: "ACCOUNTS"
     extends:
       file: common-config.yml
       service: microservice-eureka-config
@@ -50,6 +74,12 @@ services:
     container_name: loans-ms
     ports:
       - "8083:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     environment:
       SPRING_APPLICATION_NAME: "loans"
     extends:
@@ -61,6 +91,12 @@ services:
     container_name: cards-ms
     ports:
       - "8082:8080"
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     environment:
       SPRING_APPLICATION_NAME: "cards"
     extends:

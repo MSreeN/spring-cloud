@@ -60,7 +60,7 @@ management:
 
 eureka:
   instance:
-    hostname: localhost
+    preferIpAddress: true
   client:
     fetchRegistry: true
     registerWithEureka: true
