@@ -34,3 +34,11 @@ logging:
     org:
       springframework:
         web: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    gatewayCircuitBreaker:
+       slidingWindowSize: 10
+       failureRateThreshold: 50
+       waitDurationInOpenState: 10000
+       permittedNumberOfCallsInHalfOpenState: 2
