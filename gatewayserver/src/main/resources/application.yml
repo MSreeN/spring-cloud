@@ -23,6 +23,8 @@ management:
       enabled: true
     liveness-state:
       enabled: true
+    circuitbreakers:
+      enabled: true
   endpoint:
     health:
       probes:
@@ -35,11 +37,12 @@ logging:
       springframework:
         web: DEBUG
 
-resilience4j.circuitbreaker:
-  configs:
-    gatewayCircuitBreaker:
-       slidingWindowSize: 10
-       failureRateThreshold: 50
-       waitDurationInOpenState: 10000
-       permittedNumberOfCallsInHalfOpenState: 2
-       minimumNumberOfCalls: 1
+resilience4j:
+  circuitbreaker:
+    instances:
+      customCircuit:
+         slidingWindowSize: 10
+         failureRateThreshold: 50
+         waitDurationInOpenState: 10000
+         permittedNumberOfCallsInHalfOpenState: 2
+#         minimumNumberOfCalls: 1
