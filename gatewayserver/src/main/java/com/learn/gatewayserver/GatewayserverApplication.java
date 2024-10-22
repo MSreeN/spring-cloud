@@ -24,7 +24,16 @@ public class GatewayserverApplication {
 								.circuitBreaker(c -> c.setName("controllerCircuit")
 										.setFallbackUri("forward:/contactSupport"))
 								.addRequestHeader("time", LocalTime.now().toString()))
-						.uri("lb://ACCOUNTS")).build();
+						.uri("lb://ACCOUNTS"))
+				.route(r -> r.path("/gateway/cards/**")
+						.filters(f -> f.rewritePath("/gateway/cards/(?<remaining>.*)", "/$" +
+								"{remaining" +
+								"}")).uri("http://localhost:8082"))
+				.route(r -> r.path("/gateway/loans/**")
+						.filters(f -> f.rewritePath("/gateway/loans/(?<remaining>.*)", "/$" +
+								"{remaining}")
+								).uri("http://localhost:8082"))
+				.build();
 	}
 
 }

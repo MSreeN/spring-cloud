@@ -1,5 +1,5 @@
-#server:
-#  port: 8082
+server:
+  port: 8082
 spring:
   application:
     name: "cards"
@@ -29,8 +29,8 @@ spring:
 #        dialect: org.hibernate.dialect.MySQLDialect
   profiles:
     active: "prod"
-#  config:
-#    import: "optional:configserver:http://localhost:8088/"
+  config:
+    import: "optional:configserver:http://localhost:8088/"
 management:
   endpoints:
     web:
