@@ -45,4 +45,9 @@ resilience4j:
          failureRateThreshold: 50
          waitDurationInOpenState: 10000
          permittedNumberOfCallsInHalfOpenState: 2
+      controllerCircuit:
+          slidingWindowSize: 10
+          failureRateThreshold: 60
+          waitDurationInOpenState: 10000
+          permittedNumberOfCallsInHalfOpenState: 2
 #         minimumNumberOfCalls: 1

@@ -14,7 +14,7 @@ public class GatewayController {
 
 
     @GetMapping("/fb")
-    @CircuitBreaker(name = "customCircuit", fallbackMethod = "cbFallback")
+    @CircuitBreaker(name = "controllerCircuit", fallbackMethod = "cbFallback")
     public Mono<String> controllerWithFallback(){
         return WebClient.builder().baseUrl("http" +
                         "://localhost:8081/api" +
@@ -25,5 +25,10 @@ public class GatewayController {
 
     public Mono<String> cbFallback(Throwable throwable){
         return Mono.just("Response from fallback method");
+    }
+
+    @GetMapping("/contactSupport")
+    public String contactSupport(){
+        return "Please contact support.";
     }
 }

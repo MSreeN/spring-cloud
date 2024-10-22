@@ -21,7 +21,8 @@ public class GatewayserverApplication {
 				.route(r -> r.path("/gateway/accounts/**")
 						.filters(f -> f.rewritePath("/gateway/accounts/(?<remaining>.*)",
 										"/${remaining}")
-								.circuitBreaker(c -> c.setName("customCircuit"))
+								.circuitBreaker(c -> c.setName("controllerCircuit")
+										.setFallbackUri("forward:/contactSupport"))
 								.addRequestHeader("time", LocalTime.now().toString()))
 						.uri("lb://ACCOUNTS")).build();
 	}
