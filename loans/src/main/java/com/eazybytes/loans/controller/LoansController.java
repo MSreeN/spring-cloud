@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,8 @@ import org.springframework.web.bind.annotation.*;
 public class LoansController {
 
     private ILoansService iLoansService;
+
+    private static final Logger log = LoggerFactory.getLogger(LoansController.class);
 
     @Operation(
             summary = "Create Loan REST API",
@@ -58,10 +62,12 @@ public class LoansController {
     public ResponseEntity<ResponseDto> createLoan(@RequestParam
                                                       @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                       String mobileNumber) {
-        iLoansService.createLoan(mobileNumber);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
+        log.info("retry mechanism");
+        throw new RuntimeException("Blocker on loans microservice");
+//        iLoansService.createLoan(mobileNumber);
+//        return ResponseEntity
+//                .status(HttpStatus.CREATED)
+//                .body(new ResponseDto(LoansConstants.STATUS_201, LoansConstants.MESSAGE_201));
     }
 
     @Operation(

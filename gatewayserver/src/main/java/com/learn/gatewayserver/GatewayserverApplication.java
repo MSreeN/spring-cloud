@@ -5,7 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
 @SpringBootApplication
@@ -32,7 +34,10 @@ public class GatewayserverApplication {
 				.route(r -> r.path("/gateway/loans/**")
 						.filters(f -> f.rewritePath("/gateway/loans/(?<remaining>.*)", "/$" +
 								"{remaining}")
-								).uri("http://localhost:8082"))
+										.retry(retryConfig -> retryConfig.setRetries(3).setMethods(HttpMethod.POST, HttpMethod.GET)
+												.setBackoff(Duration.ofMillis(100),
+														Duration.ofMillis(1000), 2, true))
+								).uri("http://localhost:8083"))
 				.build();
 	}
 
