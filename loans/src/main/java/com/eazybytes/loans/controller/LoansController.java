@@ -63,7 +63,7 @@ public class LoansController {
                                                       @Pattern(regexp="(^$|[0-9]{10})",message = "Mobile number must be 10 digits")
                                                       String mobileNumber) {
         log.info("retry mechanism");
-        throw new RuntimeException("Blocker on loans microservice");
+        throw new RuntimeException("Some");
 //        iLoansService.createLoan(mobileNumber);
 //        return ResponseEntity
 //                .status(HttpStatus.CREATED)

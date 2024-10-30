@@ -20,7 +20,8 @@ public class GatewayController {
                         "://localhost:8081/api" +
                         "/contactInfo").build()
                 .get().retrieve().bodyToMono(AccountsContactInfoDto.class)
-                .map(res -> res.message());
+                .map(res -> res.message())
+                .onErrorMap(e -> new RuntimeException("Service is down"));
     }
 
     public Mono<String> cbFallback(Throwable throwable){

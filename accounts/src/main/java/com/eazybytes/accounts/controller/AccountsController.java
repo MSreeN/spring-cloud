@@ -6,6 +6,7 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ErrorResponseDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -178,5 +179,15 @@ public class AccountsController {
         return new ResponseEntity<>(accountsContactInfoDto, HttpStatus.OK);
     }
 
+    @GetMapping("/build-info")
+    @CircuitBreaker(name = "accountscb", fallbackMethod = "accountsCbFb")
+    public String getBuildInfo(){
+        throw new NullPointerException();
+//        return "1.0";
+    }
+
+    public String accountsCbFb(Throwable throwable){
+        return "Response from Accounts Fallback";
+    }
 
 }
