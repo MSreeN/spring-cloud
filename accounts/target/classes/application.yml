@@ -85,4 +85,11 @@ resilience4j:
         waitDurationInOpenState: 5000
         permittedNumberOfCallsInHalfOpenState: 2
         minimumNumberOfCalls: 3
+  retry:
+    instances:
+      accountsRetry:
+        maxAttempts: 3
+        waitDuration: 2s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
 

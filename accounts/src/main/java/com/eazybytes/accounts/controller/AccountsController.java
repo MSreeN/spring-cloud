@@ -7,6 +7,7 @@ import com.eazybytes.accounts.dto.ErrorResponseDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,14 +182,20 @@ public class AccountsController {
     }
 
     @GetMapping("/build-info")
-    @CircuitBreaker(name = "accountscb", fallbackMethod = "accountsCbFb")
+//    @CircuitBreaker(name = "accountscb", fallbackMethod = "accountsCbFb")
+    @Retry(name= "accountsRetry", fallbackMethod = "accountRetryFb")
     public String getBuildInfo(){
+        log.info("retry implemented");
         throw new NullPointerException();
 //        return "1.0";
     }
 
     public String accountsCbFb(Throwable throwable){
         return "Response from Accounts Fallback";
+    }
+
+    public String accountRetryFb(Throwable throwable){
+        return "Response from retry fallback";
     }
 
 }
