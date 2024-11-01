@@ -92,4 +92,10 @@ resilience4j:
         waitDuration: 2s
         enableExponentialBackoff: true
         exponentialBackoffMultiplier: 2
+  ratelimiter:
+    instances:
+      accountsRl:
+        timeoutDuration: 1000
+        limitRefreshPeriod: 5000
+        limitForPeriod: 1
 

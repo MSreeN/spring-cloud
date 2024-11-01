@@ -7,6 +7,7 @@ import com.eazybytes.accounts.dto.ErrorResponseDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -183,11 +184,12 @@ public class AccountsController {
 
     @GetMapping("/build-info")
 //    @CircuitBreaker(name = "accountscb", fallbackMethod = "accountsCbFb")
-    @Retry(name= "accountsRetry", fallbackMethod = "accountRetryFb")
+//    @Retry(name= "accountsRetry", fallbackMethod = "accountRetryFb")
+    @RateLimiter(name = "accountsRl", fallbackMethod = "accountsRateLimitFb")
     public String getBuildInfo(){
         log.info("retry implemented");
-        throw new NullPointerException();
-//        return "1.0";
+//        throw new NullPointerException();
+        return "1.0";
     }
 
     public String accountsCbFb(Throwable throwable){
@@ -196,6 +198,10 @@ public class AccountsController {
 
     public String accountRetryFb(Throwable throwable){
         return "Response from retry fallback";
+    }
+
+    public String accountsRateLimitFb(Throwable throwable){
+        return "Response from ratelimiter fallback";
     }
 
 }
